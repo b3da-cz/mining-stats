@@ -1,0 +1,7 @@
+<div #formRow class="form-group margin-bottom-18">
+  <label *ngIf="label && label.length">
+    {{label | trans}}: &nbsp;
+    <info-tooltip *ngIf="tooltipLabel && tooltipLabel.length > 0" [label]="tooltipLabel" [icon]="tooltipIcon"></info-tooltip>
+  </label>
+  <select2 #select2el [id]="elementId" [data]="optionsFormatted" [class]="classesString" [cssImport]="true" [disabled]="inputDisabled" [options]="select2options" (valueChanged)="onNgModelChange($event)"></select2>
+</div>

@@ -1,0 +1,131 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="['/dashboard']" href="#">
+        <span><strong>MINING</strong>STATS</span>
+      </a>
+    </div>
+    <div id="navbar" class="navbar-collapse">
+      <!--<ul class="nav navbar-nav margin-left"></ul>-->
+      <ul class="nav navbar-nav navbar-right">
+        <li *ngIf="loading"><a href="#" class="process-status-icon-container" style="cursor: wait"><i class="fa fa-refresh fa-spin icon-big-3"></i></a></li>
+        <li title="{{'coins' | trans}}" [ngClass]="{'active': activeRoute === '/coins'}">
+          <a class="process-status-icon-container"  href="#" [routerLink]="['/coins']">
+            <span class="fal fa-usd-circle margin-horizontal icon-big-31"></span>
+          </a>
+        </li>
+        <li title="{{'rigs' | trans}}" [ngClass]="{'active': activeRoute === '/rigs'}">
+          <a class="process-status-icon-container"  href="#" [routerLink]="['/rigs']">
+            <span class="fal fa-rocket margin-horizontal icon-big-31"></span>
+          </a>
+        </li>
+        <li title="{{'addresses' | trans}}" [ngClass]="{'active': activeRoute && activeRoute.includes('/addresses')}">
+          <a class="process-status-icon-container"  href="#" [routerLink]="['/addresses']">
+            <span class="fal fa-inbox margin-horizontal icon-big-31"></span>
+          </a>
+        </li>
+        <!--<li title="{{'settings' | trans}}" [ngClass]="{'active': activeRoute && activeRoute.includes('/settings')}">-->
+          <!--<a class="process-status-icon-container"  href="#" [routerLink]="['/settings']">-->
+            <!--<span class="fal fa-cog margin-horizontal icon-big-31"></span>-->
+          <!--</a>-->
+        <!--</li>-->
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="fal fa-bars margin-horizontal icon-big-3"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-header">{{'languages' | trans}}</li>
+            <li *ngFor="let lang of languages" (click)="selectLanguage(lang.code)">
+              <a href="#">
+                <strong *ngIf="lang.code === language">
+                  <i class="fal fa-flag margin-right"></i>
+                  {{lang.code | trans}}
+                </strong>
+                <em *ngIf="lang.code !== language">
+                  <span class="margin-horizontal"> &nbsp; </span>
+                  {{lang.code | trans}}
+                </em>
+              </a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li class="dropdown-header">{{'options' | trans}}</li>
+            <li [ngClass]="{'active': activeRoute && activeRoute.includes('/settings')}">
+              <a [routerLink]="['/settings']" href="#">
+                <i class="fal fa-cog margin-right"></i>
+                {{'settings' | trans}}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!--<div class="container-fluid">-->
+    <!--<div class="navbar-header">-->
+      <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">-->
+        <!--<span class="sr-only">Toggle navigation</span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+        <!--<span class="icon-bar"></span>-->
+      <!--</button>-->
+      <!--<a class="navbar-brand" [routerLink]="['/dashboard']" href="#">-->
+        <!--<span><strong>MINING</strong>STATS</span>-->
+      <!--</a>-->
+    <!--</div>-->
+    <!--<div id="navbar" class="navbar-collapse collapse">-->
+      <!--&lt;!&ndash;<ul class="nav navbar-nav margin-left"></ul>&ndash;&gt;-->
+      <!--<ul class="nav navbar-nav navbar-right">-->
+        <!--<li *ngIf="loading"><a href="#" class="process-status-icon-container" style="cursor: wait"><i class="fa fa-refresh fa-spin icon-big-3"></i></a></li>-->
+        <!--<li title="{{'coins' | trans}}" [ngClass]="{'active': activeRoute === '/coins'}">-->
+          <!--<a class="process-status-icon-container"  href="#" [routerLink]="['/coins']">-->
+            <!--<span class="fal fa-usd-circle margin-horizontal icon-big-31"></span>-->
+          <!--</a>-->
+        <!--</li>-->
+        <!--<li title="{{'rigs' | trans}}" [ngClass]="{'active': activeRoute === '/rigs'}">-->
+          <!--<a class="process-status-icon-container"  href="#" [routerLink]="['/rigs']">-->
+            <!--<span class="fal fa-rocket margin-horizontal icon-big-31"></span>-->
+          <!--</a>-->
+        <!--</li>-->
+        <!--<li title="{{'addresses' | trans}}" [ngClass]="{'active': activeRoute && activeRoute.includes('/addresses')}">-->
+          <!--<a class="process-status-icon-container"  href="#" [routerLink]="['/addresses']">-->
+            <!--<span class="fal fa-inbox margin-horizontal icon-big-31"></span>-->
+          <!--</a>-->
+        <!--</li>-->
+        <!--&lt;!&ndash;<li title="{{'settings' | trans}}" [ngClass]="{'active': activeRoute && activeRoute.includes('/settings')}">&ndash;&gt;-->
+          <!--&lt;!&ndash;<a class="process-status-icon-container"  href="#" [routerLink]="['/settings']">&ndash;&gt;-->
+            <!--&lt;!&ndash;<span class="fal fa-cog margin-horizontal icon-big-31"></span>&ndash;&gt;-->
+          <!--&lt;!&ndash;</a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</li>&ndash;&gt;-->
+        <!--<li class="dropdown">-->
+          <!--<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">-->
+            <!--<span class="fal fa-bars margin-horizontal icon-big-3"></span>-->
+          <!--</a>-->
+          <!--<ul class="dropdown-menu">-->
+            <!--<li class="dropdown-header">{{'languages' | trans}}</li>-->
+            <!--<li *ngFor="let lang of languages" (click)="selectLanguage(lang.code)">-->
+              <!--<a href="#">-->
+                <!--<strong *ngIf="lang.code === language">-->
+                  <!--<i class="fal fa-flag margin-right"></i>-->
+                  <!--{{lang.code | trans}}-->
+                <!--</strong>-->
+                <!--<em *ngIf="lang.code !== language">-->
+                  <!--<span class="margin-horizontal"> &nbsp; </span>-->
+                  <!--{{lang.code | trans}}-->
+                <!--</em>-->
+              <!--</a>-->
+            <!--</li>-->
+            <!--<li role="separator" class="divider"></li>-->
+            <!--<li class="dropdown-header">{{'options' | trans}}</li>-->
+            <!--<li [ngClass]="{'active': activeRoute && activeRoute.includes('/settings')}">-->
+              <!--<a [routerLink]="['/settings']" href="#">-->
+                <!--<i class="fal fa-cog margin-right"></i>-->
+                <!--{{'settings' | trans}}-->
+              <!--</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
+  <!--</div>-->
+</nav>

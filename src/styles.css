@@ -1,0 +1,137 @@
+/** { outline: 1px solid red }*/
+body { padding-top: 70px; }
+
+.text-size-medium { font-size: 1.75rem; line-height: 1.6; }
+.s {color: yellow;
+}
+.pull-left { float: left; }
+.pull-right { float: right; }
+.centered-text { text-align: center; }
+.text-right { text-align: right; }
+.text-wrap { text-wrap: normal; word-wrap: break-word; }
+.text-monospace { font-family: Consolas, Menlo, Monaco, monospace; }
+.clearfix { clear: both; }
+
+.margin-top { margin-top: 1rem; }
+.margin-top-2 { margin-top: 2rem; }
+.margin-bottom { margin-bottom: 1rem; }
+.margin-left { margin-left: 1rem; }
+.margin-right { margin-right: 1rem; }
+.margin-vertical { margin-top: 1rem; margin-bottom: 1rem; }
+.margin-vertical-2 { margin-top: 2rem; margin-bottom: 2rem; }
+.margin-horizontal { margin-left: 1rem; margin-right: 1rem; }
+.no-margin { margin: 0 !important; }
+
+.padding-top { padding-top: 1rem; }
+.padding-bottom { padding-bottom: 1rem; }
+.padding-left { padding-left: 1rem; }
+.padding-right { padding-right: 1rem; }
+.padding-vertical { padding-top: 1rem; padding-bottom: 1rem; }
+.padding-horizontal { padding-left: 1rem; padding-right: 1rem; }
+.no-padding { padding: 0 !important; }
+
+.splash-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 10rem);
+}
+.splash {
+    width: 40vh;
+    height: auto;
+    opacity: 0.2;
+}
+
+.overlay {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    opacity: 0.6;
+    z-index: 9999;
+    cursor: progress;
+}
+
+.tooltip-top {
+    display: inline;
+    position: relative;
+}
+.tooltip-top:hover:after{
+    background: #333;
+    background: rgba(0,0,0,.8);
+    border-radius: 5px;
+    bottom: 16px;
+    color: #fff;
+    content: attr(data-tooltip);
+    left: 30%;
+    padding: 10px 15px;
+    position: absolute;
+    z-index: 999;
+    width: 210px;
+}
+
+.input-group-addon .fa, .input-group-addon .fal, .input-group-addon .fas, .input-group-addon .far {
+    width: 2rem;
+}
+
+.list-scrollable {
+    max-height: calc(100vh - 18rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 2rem;
+}
+.list-item-clickable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+    line-height: 2;
+    cursor: pointer;
+    background-color: inherit;
+}
+.list-item-clickable-label-left {
+    text-align: center;
+    /*font-size: 1.8rem;*/
+    font-weight: 600;
+    width: 6rem;
+    transition: background 800ms;
+}
+.list-item-clickable-label-left.wide {
+    width: 10rem;
+}
+.list-item-clickable-label-center {
+    width: calc(100% - 10rem);
+    padding: 0 1rem;
+    transition: background 300ms;
+}
+.list-item-clickable-label-center.narrow {
+    width: calc(100% - 33rem);
+}
+.list-item-clickable:hover .list-item-clickable-label-left,
+.list-item-clickable-label-left.active,
+.list-item-clickable-label-center.active,
+.list-item-clickable:hover .list-item-clickable-label-right.wide {
+    background-color: #375a7f;
+}
+.list-item-clickable:hover .list-item-clickable-label-center {
+    background-color: #2a749d;
+}
+.list-item-clickable-label-right {
+    text-align: center;
+    width: 4rem;
+    transition: background 600ms;
+}
+.list-item-clickable-label-right:hover {
+    background-color: #9d1217;
+}
+.list-item-clickable-label-right.wide {
+    width: 23rem;
+    padding: 0 1rem;
+    text-align: right;
+}
+.amount-negative {
+    color: #9d1217;
+}

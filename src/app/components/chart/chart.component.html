@@ -1,0 +1,9 @@
+<div class="chart-container margin-bottom" *ngIf="data">
+  <div class="chart-header-row">
+    <div id="chart-type-label" class="label color-secondary margin-vertical">{{data.name && data.name.length > 0 ? (data.name | trans) : '&nbsp;'}}</div>
+    <div id="chart-event-result" class="label color-primary chart-event-result" *ngIf="crosshairLabel && crosshairData">
+      <div class="color-secondary font-small">{{crosshairLabel}}</div><div>{{crosshairData}}</div>
+    </div>
+  </div>
+  <canvas #chart [id]="chartId" class="chart" width="1500" height="350"></canvas>
+</div>

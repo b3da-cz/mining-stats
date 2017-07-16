@@ -1,0 +1,86 @@
+<h1>
+  {{'addresses' | trans}} &nbsp;
+  <btn title="{{isEditMode ? 'show' : 'edit'}}" [icon]="isEditMode ? 'fa-list-alt' : 'fa-pencil'" (onEvent)="isEditMode = !isEditMode"></btn> &nbsp;
+  <btn title="{{'new'}}" [icon]="'fa-file-plus'" (onEvent)="createNew()" *ngIf="isEditMode"></btn>
+</h1>
+<div class="row">
+  <div class="col-xs-12 col-sm-6 list-scrollable">
+    <div *ngFor="let address of addresses" class="list-item-clickable">
+      <div class="list-item-clickable-label-left" [ngClass]="{'active': selectedAddress.address === address.address}" (click)="selectAddress(address)">{{address.coinSymbol && address.coinSymbol.length > 0 ? address.coinSymbol.toUpperCase() : ''}}</div>
+      <div class="list-item-clickable-label-center" [ngClass]="{'active': selectedAddress.address === address.address}" (click)="selectAddress(address)">{{address.name}}</div>
+      <div class="list-item-clickable-label-right" (click)="deleteAddress(address)"><i class="fal fa-trash" *ngIf="isEditMode"></i></div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6 list-scrollable">
+    <form class="form" *ngIf="isEditMode">
+      <form-row-input [label]="'name'" [(value)]="selectedAddress.name"></form-row-input>
+      <form-row-input [label]="'address'" [icon]="'fa-inbox'" [(value)]="selectedAddress.address"></form-row-input>
+      <form-row-select
+          [label]="'coin'"
+          [icon]="'fa-usd-circle'"
+          [value]="selectedAddress.coinSymbol"
+          [options]="coins"
+          [optionKey]="'symbol'"
+          (valueChange)="selectedAddress.coinSymbol = $event"
+      ></form-row-select>
+      <form-row-select
+          [label]="'rig'"
+          [icon]="'fa-rocket'"
+          [value]="selectedAddress.rigId"
+          [options]="rigs"
+          (valueChange)="selectedAddress.rigId = $event"
+      ></form-row-select>
+      <form-row-textarea [label]="'note'" [icon]="'fa-file-alt'" [(value)]="selectedAddress.note"></form-row-textarea>
+      <btn [label]="'confirm'" [icon]="'fa-inbox'" [classes]="['btn-primary', 'margin-right']" [btnType]="'submit'" (onEvent)="submitAddress()"></btn>
+      <btn [label]="'delete'" [icon]="'fa-trash'" [classes]="['btn-danger']" (onEvent)="deleteAddress()"></btn>
+    </form>
+    <div *ngIf="!isEditMode && selectedAddress && selectedAddress.address && selectedAddress.address.length > 0">
+      <h2 class="no-margin">
+        <i class="fal fa-inbox margin-right"></i>
+        {{selectedAddress.name}}
+      </h2>
+      <div class="row text-size-medium margin-top">
+        <div class="col-xs-3"><strong>{{'address' | trans}}</strong></div>
+        <div class="col-xs-9 text-right text-wrap">{{selectedAddress.address}}</div>
+        <div class="col-xs-6"><strong>{{'coin' | trans}}</strong></div>
+        <div class="col-xs-6 text-right">{{selectedAddressCoin.name}}</div>
+        <div class="col-xs-6"><strong>{{'rig' | trans}}</strong></div>
+        <div class="col-xs-6 text-right">{{selectedAddressRig.name}}</div>
+        <div class="col-xs-6"><strong>{{'balance' | trans}}</strong></div>
+        <div class="col-xs-6 text-right text-monospace" [ngClass]="{'amount-negative': (selectedAddress | addressBalance) < 0}">{{selectedAddress | addressBalance}} {{selectedAddress.coinSymbol.toUpperCase()}}</div>
+        <div class="col-xs-12" *ngIf="selectedAddress.note && selectedAddress.note.length > 0">
+          <strong>{{'note' | trans}}</strong>
+          <div [innerHtml]="selectedAddress.note | nl2br" style="font-style: italic"></div>
+        </div>
+      </div>
+      <div class="row" *ngIf="chartData && chartData.data && chartData.data.length > 1">
+        <div class="col-xs-12 no-padding">
+          <app-chart [data]="chartData"></app-chart>
+        </div>
+      </div>
+      <h3>
+        {{'records' | trans}} &nbsp;
+        <app-modal-record
+            [isCreatingNew]="true"
+            [isModalLarge]="true"
+            [coin]="selectedAddressCoin"
+            (onCreate)="addRecord($event)"
+            (onDelete)="deleteRecord($event)"
+        ></app-modal-record>
+      </h3>
+      <div class="row margin-top" *ngIf="selectedAddress.records && selectedAddress.records.length > 0">
+        <app-modal-record *ngFor="let record of selectedAddress.records"
+            [record]="record"
+            [coin]="selectedAddressCoin"
+            (onCreate)="addRecord($event)"
+            (onDelete)="deleteRecord($event)"
+        ></app-modal-record>
+        <!--<div *ngFor="let record of selectedAddress.records" class="list-item-clickable">-->
+          <!--<div class="list-item-clickable-label-left" [routerLink]="['/record', record.time]">{{record.direction | txDir | trans}}</div>-->
+          <!--<div class="list-item-clickable-label-center" [routerLink]="['/record', record.time]">{{address.name}}</div>-->
+          <!--<div class="list-item-clickable-label-right"></div>-->
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+</div>

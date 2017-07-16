@@ -1,0 +1,20 @@
+<div #formRow class="form-group">
+  <label *ngIf="label && label.length">
+    {{label | trans}}: &nbsp;
+    <info-tooltip *ngIf="tooltipLabel && tooltipLabel.length > 0" [label]="tooltipLabel" [icon]="tooltipIcon"></info-tooltip>
+  </label>
+  <div class="input-group">
+    <div class="input-group-addon" *ngIf="icon && icon.length">
+      <i [class]="iconClassesString"></i>
+    </div>
+    <input [type]="inputType" *ngIf="inputDisabled" [class]="classesString" [ngModel]="value" disabled>
+    <!--<input [type]="inputType" *ngIf="!inputDisabled && placeholder && placeholder.length > 0" placeholder="{{placeholder}}" [class]="classesString" [ngModel]="value" (ngModelChange)="onNgModelChange($event)" (keyup)="onInputKeyPress($event)" (change)="onInputValueChange($event)">-->
+    <input [type]="inputType" *ngIf="!inputDisabled && !translateBarcode && !replaceComma" [class]="classesString" [ngModel]="value" (ngModelChange)="onNgModelChange($event)" (keyup)="onInputKeyPress($event)" (change)="onInputValueChange($event)" placeholder="{{placeholder}}">
+    <input [type]="inputType" *ngIf="!inputDisabled && translateBarcode && !replaceComma" translateBarcode [class]="classesString" [ngModel]="value" (ngModelChange)="onNgModelChange($event)" (keyup)="onInputKeyPress($event)" placeholder="{{placeholder}}">
+    <input [type]="inputType" *ngIf="!inputDisabled && !translateBarcode && replaceComma" replaceComma [class]="classesString" [ngModel]="value" (ngModelChange)="onNgModelChange($event)" (keyup)="onInputKeyPress($event)" placeholder="{{placeholder}}">
+    <input [type]="inputType" *ngIf="!inputDisabled && translateBarcode && replaceComma" translateBarcode replaceComma [class]="classesString" [ngModel]="value" (ngModelChange)="onNgModelChange($event)" (keyup)="onInputKeyPress($event)" placeholder="{{placeholder}}">
+    <div class="input-group-btn" *ngIf="(btnLabel && btnLabel.length) || (btnIcon && btnIcon.length)">
+      <btn [label]="btnLabel" [classes]="btnClasses" [icon]="btnIcon" (onEvent)="onBtnClick($event)"></btn>
+    </div>
+  </div>
+</div>

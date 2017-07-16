@@ -1,0 +1,63 @@
+<btn *ngIf="isCreatingNew" title="{{'new'}}" [icon]="'fa-file-plus'" (onEvent)="showChildModal()"></btn>
+
+<div class="list-item-clickable" *ngIf="record && coin && !isCreatingNew" (click)="showChildModal()">
+  <div class="list-item-clickable-label-left wide">{{record.direction | txDir | trans}}</div>
+  <div class="list-item-clickable-label-center narrow">{{record.time | strToDate | date: 'dd.MM.yyyy HH:mm'}}</div>
+  <div class="list-item-clickable-label-right wide text-monospace" [ngClass]="{'amount-negative': record.direction === 2}">{{record.amount | formatCoinAmount}} {{coin.symbol.toUpperCase()}}</div>
+</div>
+
+<div bsModal #recordModal="bs-modal" class="modal fade modal-record" tabindex="-1" role="dialog" aria-labelledby="appModal" aria-hidden="true">
+  <div class="modal-dialog" [ngClass]="{ 'modal-sm': !isModalLarge, 'modal-lg': isModalLarge }">
+    <div class="modal-content" *ngIf="record && coin">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="hideChildModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">
+          <i class="fal margin-right" [ngClass]="{'fa-file-plus': isCreatingNew, 'fa-file': !isCreatingNew}"></i>
+          <strong>{{'record' | trans}}</strong>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form" *ngIf="isCreatingNew || isEditMode">
+          <form-row-select
+              [label]="'direction'"
+              [icon]="'fa-exchange'"
+              [value]="record.direction"
+              [options]="directions"
+              (valueChange)="changeDirection($event)"
+          ></form-row-select>
+          <form-row-input [label]="'time'" [icon]="'fa-clock'" [inputType]="'datetime-local'" [(value)]="dateTimeString" (valueChange)="changeTime($event)"></form-row-input>
+          <form-row-input [label]="'amount'" [icon]="'fa-glass-martini'" [inputType]="'number'" [(value)]="record.amount"></form-row-input>
+          <form-row-input [label]="'rate.btc'" [icon]="'fa-chart-bar'" [inputType]="'number'" [(value)]="record.btcRate" [btnIcon]="'fa-refresh'" (onBtnEvent)="fillBtcRate()"></form-row-input>
+          <form-row-input [label]="'amount.btc'" [icon]="'fa-trophy'" [inputType]="'number'" [(value)]="record.btcAmount" [btnIcon]="'fa-refresh'" (onBtnEvent)="fillBtcAmount()"></form-row-input>
+          <form-row-textarea [label]="'note'" [icon]="'fa-file-alt'" [(value)]="record.note"></form-row-textarea>
+        </form>
+        <div class="row" *ngIf="!isCreatingNew && !isEditMode">
+          <div class="col-xs-5"><strong>{{'direction' | trans}}</strong></div>
+          <div class="col-xs-7 text-right">{{record.direction | txDir | trans}}</div>
+          <div class="col-xs-5"><strong>{{'time' | trans}}</strong></div>
+          <div class="col-xs-7 text-right">{{record.time | strToDate | date: 'dd.MM.yyyy HH:mm'}}</div>
+          <div class="col-xs-5"><strong>{{'amount' | trans}}</strong></div>
+          <div class="col-xs-7 text-right" [ngClass]="{'amount-negative': record.direction === 2}">{{record.amount | formatCoinAmount}} {{coin.symbol.toUpperCase()}}</div>
+          <div class="col-xs-5"><strong>{{'rate.btc' | trans}}</strong></div>
+          <div class="col-xs-7 text-right">{{record.btcRate | formatCoinAmount}} BTC</div>
+          <div class="col-xs-5"><strong>{{'amount.btc' | trans}}</strong></div>
+          <div class="col-xs-7 text-right">{{record.btcAmount | formatCoinAmount}} BTC</div>
+          <div class="col-xs-12" *ngIf="record.note && record.note.length > 0">
+            <strong>{{'note' | trans}}</strong>
+            <div [innerHtml]="record.note | nl2br" style="font-style: italic"></div>
+          </div>
+        </div>
+        <div class="margin-top-2">
+          <btn [label]="'confirm'" [classes]="['btn-primary', 'pull-right']" [icon]="'fa-chevron-right'" [btnType]="'submit'" (onEvent)="create()" *ngIf="isCreatingNew || isEditMode"></btn>
+          <btn [label]="'edit'" [classes]="['btn-default', 'pull-right']" [icon]="'fa-file-edit'" (onEvent)="switchEditMode()" *ngIf="!isCreatingNew && !isEditMode"></btn>
+          <btn [label]="'delete'" [icon]="'fa-trash'" [classes]="['btn-danger', 'pull-right', 'margin-right']" (onEvent)="deleteRec()"></btn>
+          <btn [label]="'cancel'" [classes]="['btn-default', 'pull-right', 'margin-right']" [icon]="'fa-chevron-left'" (onEvent)="hideChildModal()" *ngIf="isCreatingNew"></btn>
+          <btn [label]="'cancel'" [classes]="['btn-default', 'pull-right', 'margin-right']" [icon]="'fa-chevron-left'" (onEvent)="switchEditMode()" *ngIf="isEditMode"></btn>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

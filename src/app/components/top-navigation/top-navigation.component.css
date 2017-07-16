@@ -1,0 +1,22 @@
+.dropdown-toggle, .process-status-icon-container {
+    padding: 1.45rem !important;
+}
+.icon-big-3 {
+    font-size: 3rem;
+}
+.icon-big-31 {
+    font-size: 3.1rem;
+}
+.navbar-header {
+    float: left;
+}
+#navbar {
+    float: right;
+    margin: 0;
+}
+.navbar-nav {
+    margin: 0 -15px 0 0;
+}
+.navbar-nav li {
+    display: inline-block !important;
+}

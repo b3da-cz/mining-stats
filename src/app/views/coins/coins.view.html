@@ -1,0 +1,52 @@
+<h1>
+  {{'coins' | trans}} &nbsp;
+  <btn title="{{isEditMode ? 'show' : 'edit'}}" [icon]="isEditMode ? 'fa-list-alt' : 'fa-pencil'" (onEvent)="isEditMode = !isEditMode"></btn> &nbsp;
+  <btn title="{{'new'}}" [icon]="'fa-file-plus'" (onEvent)="createNew()" *ngIf="isEditMode"></btn>
+  <btn title="{{'reload.btcRates.all'}}" [icon]="'fa-refresh'" (onEvent)="fillBtcRateForAllCoins()" *ngIf="!isEditMode"></btn>
+</h1>
+<div class="row">
+  <div class="col-xs-12 col-sm-6 list-scrollable">
+    <div *ngFor="let coin of coins" class="list-item-clickable">
+      <div class="list-item-clickable-label-left" [ngClass]="{'active': selectedCoin.symbol === coin.symbol}" (click)="selectedCoin = coin; getAddressesForSelection()">{{coin.symbol && coin.symbol.length > 0 ? coin.symbol.toUpperCase() : ''}}</div>
+      <div class="list-item-clickable-label-center" [ngClass]="{'active': selectedCoin.symbol === coin.symbol}" (click)="selectedCoin = coin; getAddressesForSelection()">{{coin.name}}</div>
+      <div class="list-item-clickable-label-right" (click)="deleteCoin(coin)"><i class="fal fa-trash" *ngIf="isEditMode"></i></div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <form class="form" *ngIf="isEditMode">
+      <form-row-input [label]="'coin.name'" [(value)]="selectedCoin.name"></form-row-input>
+      <form-row-input [label]="'coin.symbol'" [icon]="'fa-usd-circle'" [(value)]="selectedCoin.symbol" (valueChange)="fillBtcRateUrl()"></form-row-input>
+      <form-row-input [label]="'coin.btcRateUrl'" [icon]="'fa-code'" [(value)]="selectedCoin.btcRateUrl" [tooltipLabel]="'just.bittrex'"></form-row-input>
+      <form-row-input [label]="'coin.btcRate'" [icon]="'fa-chart-bar'" [(value)]="selectedCoin.btcRate" *ngIf="!selectedCoin.btcRateUrl || (selectedCoin.btcRateUrl && selectedCoin.btcRateUrl.length < 1)"></form-row-input>
+      <form-row-textarea [label]="'note'" [icon]="'fa-file-alt'" [(value)]="selectedCoin.note"></form-row-textarea>
+      <btn [label]="'confirm'" [icon]="'fa-usd-circle'" [classes]="['btn-primary', 'margin-right']" [btnType]="'submit'" (onEvent)="submitCoin()"></btn>
+      <btn [label]="'delete'" [icon]="'fa-trash'" [classes]="['btn-danger']" (onEvent)="deleteCoin()"></btn>
+    </form>
+    <div *ngIf="!isEditMode && selectedCoin && selectedCoin.symbol && selectedCoin.symbol.length > 0">
+      <h2 class="no-margin">
+        <strong>{{selectedCoin.symbol && selectedCoin.symbol.length > 0 ? selectedCoin.symbol.toUpperCase() : ''}}</strong> &nbsp;
+        {{selectedCoin.name}}
+      </h2>
+      <div class="row text-size-medium margin-top">
+        <div class="col-xs-6"><strong>{{'coin.btcRateUpdated' | trans}}</strong></div>
+        <div class="col-xs-6 text-right">{{selectedCoin.btcRateUpdated | strToDate | date: 'dd.MM.yyyy HH:mm'}}</div>
+        <div class="col-xs-6"><strong>{{'coin.btcRate' | trans}}</strong></div>
+        <div class="col-xs-6 text-right text-monospace">{{selectedCoin.btcRate | formatCoinAmount}} BTC</div>
+        <div class="col-xs-6"><strong>{{'balance' | trans}}</strong></div>
+        <div class="col-xs-6 text-right text-monospace" [ngClass]="{'amount-negative': getCoinBalanceSum() < 0}">{{getCoinBalanceSum()}} {{selectedCoin.symbol.toUpperCase()}}</div>
+        <div class="col-xs-12" *ngIf="selectedCoin.note && selectedCoin.note.length > 0">
+          <strong>{{'note' | trans}}</strong>
+          <div [innerHtml]="selectedCoin.note | nl2br" style="font-style: italic"></div>
+        </div>
+      </div>
+      <h3>{{'addresses' | trans}}</h3>
+      <div class="row margin-top" *ngIf="addresses && addresses.length > 0">
+        <div *ngFor="let address of addresses" class="list-item-clickable" [routerLink]="['/addresses', address.address]">
+          <div class="list-item-clickable-label-left wide">{{address.coinSymbol && address.coinSymbol.length > 0 ? address.coinSymbol.toUpperCase() : ''}}</div>
+          <div class="list-item-clickable-label-center narrow">{{address.name}}</div>
+          <div class="list-item-clickable-label-right wide text-monospace" [ngClass]="{'amount-negative': (address | addressBalance) < 0}">{{address | addressBalance}} {{address.coinSymbol.toUpperCase()}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

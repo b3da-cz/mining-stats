@@ -1,0 +1,44 @@
+<h1>
+  {{'rigs' | trans}} &nbsp;
+  <btn title="{{isEditMode ? 'show' : 'edit'}}" [icon]="isEditMode ? 'fa-list-alt' : 'fa-pencil'" (onEvent)="isEditMode = !isEditMode"></btn> &nbsp;
+  <btn title="{{'new'}}" [icon]="'fa-file-plus'" (onEvent)="createNew()" *ngIf="isEditMode"></btn>
+</h1>
+<div class="row">
+  <div class="col-xs-12 col-sm-6 list-scrollable">
+    <div *ngFor="let rig of rigs" class="list-item-clickable">
+      <div class="list-item-clickable-label-left" [ngClass]="{'active': selectedRig.id === rig.id}" (click)="selectedRig = rig; getAddressesForSelection()"><i class="fal fa-rocket"></i></div>
+      <div class="list-item-clickable-label-center" [ngClass]="{'active': selectedRig.id === rig.id}" (click)="selectedRig = rig; getAddressesForSelection()">{{rig.name}}</div>
+      <div class="list-item-clickable-label-right" (click)="deleteRig(rig)"><i class="fal fa-trash" *ngIf="isEditMode"></i></div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <form class="form" *ngIf="isEditMode">
+      <form-row-input [label]="'rig.name'" [(value)]="selectedRig.name"></form-row-input>
+      <!--<form-row-input [label]="'rig.symbol'" [icon]="'fa-usd-circle'" [(value)]="selectedRig.symbol"></form-row-input>-->
+      <!--<form-row-input [label]="'rig.btcRateUrl'" [icon]="'fa-code'" [(value)]="selectedRig.btcRateUrl"></form-row-input>-->
+      <!--<form-row-textarea [label]="'note'" [icon]="'fa-file-alt'" [(value)]="selectedRig.note"></form-row-textarea>-->
+      <btn [label]="'confirm'" [icon]="'fa-rocket'" [classes]="['btn-primary', 'margin-right']" [btnType]="'submit'" (onEvent)="submitRig()"></btn>
+      <btn [label]="'delete'" [icon]="'fa-trash'" [classes]="['btn-danger']" (onEvent)="deleteRig()"></btn>
+    </form>
+    <div *ngIf="!isEditMode && selectedRig && selectedRig.name && selectedRig.name.length > 0">
+      <h2 class="no-margin">
+        <i class="fal fa-rocket margin-right"></i>
+        {{selectedRig.name}}
+      </h2>
+      <div class="row text-size-medium margin-top">
+        <div class="col-xs-6"><strong>{{'amount.btc.oldRate' | trans}}</strong></div>
+        <div class="col-xs-6 text-right text-monospace">{{getRigBalanceSum()}} BTC</div>
+        <div class="col-xs-6"><strong>{{'amount.btc.newRate' | trans}}</strong></div>
+        <div class="col-xs-6 text-right text-monospace">{{getRigBalanceSum(true)}} BTC</div>
+      </div>
+      <h3>{{'addresses' | trans}}</h3>
+      <div class="row margin-top" *ngIf="addresses && addresses.length > 0">
+        <div *ngFor="let address of addresses" class="list-item-clickable" [routerLink]="['/addresses', address.address]">
+          <div class="list-item-clickable-label-left wide">{{address.coinSymbol && address.coinSymbol.length > 0 ? address.coinSymbol.toUpperCase() : ''}}</div>
+          <div class="list-item-clickable-label-center narrow">{{address.name}}</div>
+          <div class="list-item-clickable-label-right wide text-monospace" [ngClass]="{'amount-negative': (address | addressBalance) < 0}">{{address | addressBalance}} {{address.coinSymbol.toUpperCase()}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

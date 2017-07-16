@@ -1,0 +1,20 @@
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+}
+.chart-header-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+#chart-event-result { text-align: right }
+.chart {
+    width: 100%;
+    height: auto;
+}

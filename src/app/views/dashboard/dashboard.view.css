@@ -1,0 +1,16 @@
+.dashboard-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.dashboard-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*margin: 1rem;*/
+    /*width: calc(30% - 2rem);*/
+    width: 33%;
+    height: 10rem;
+    background-color: rgba(255, 255, 255, 0.3);
+}

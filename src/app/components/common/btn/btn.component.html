@@ -1,0 +1,8 @@
+<button #btn *ngIf="!btnDisabled" [type]="btnType" [class]="classesString" (click)="triggerEvent()">
+  <i *ngIf="icon && icon.length" [class]="iconClassesString"></i>
+  {{label | trans}}
+</button>
+<button #btn *ngIf="btnDisabled" disabled [type]="btnType" [class]="classesString">
+  <i *ngIf="icon && icon.length" [class]="iconClassesString"></i>
+  {{label | trans}}
+</button>

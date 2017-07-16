@@ -1,0 +1,16 @@
+<div #formRow class="form-group">
+  <label *ngIf="label && label.length">
+    {{label | trans}}: &nbsp;
+    <info-tooltip *ngIf="tooltipLabel && tooltipLabel.length > 0" [label]="tooltipLabel" [icon]="tooltipIcon"></info-tooltip>
+  </label>
+  <div class="input-group">
+    <div class="input-group-addon" *ngIf="icon && icon.length">
+      <i [class]="iconClassesString"></i>
+    </div>
+    <textarea [cols]="cols" [rows]="rows" *ngIf="inputDisabled" disabled [class]="classesString" [ngModel]="value"></textarea>
+    <textarea [cols]="cols" [rows]="rows" *ngIf="!inputDisabled" [class]="classesString" [ngModel]="value" (ngModelChange)="onNgModelChange($event)" (keyup)="onInputKeyPress($event)"></textarea>
+    <div class="input-group-btn" *ngIf="(btnLabel && btnLabel.length) || (btnIcon && btnIcon.length)">
+      <btn [label]="btnLabel" [classes]="btnClasses" [icon]="btnIcon" (onEvent)="onBtnClick($event)"></btn>
+    </div>
+  </div>
+</div>

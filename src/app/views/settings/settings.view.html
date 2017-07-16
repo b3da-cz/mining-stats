@@ -1,0 +1,26 @@
+<h1>{{'settings' | trans}}</h1>
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <label for="download-anchor">{{'data.saveToFile' | trans}}:</label>
+    <br>
+    <a href="" id="download-anchor" class="btn btn-default">
+      <i class="fal fa-download margin-right"></i>
+      {{'data.download' | trans}}
+    </a>
+    <!--<btn [label]="'data.download'"-->
+         <!--[icon]="'fa-download'"-->
+         <!--[classes]="['btn-primary', 'margin-right']"-->
+         <!--[btnType]="'submit'"-->
+         <!--(onEvent)="downloadAppData()"-->
+    <!--&gt;</btn>-->
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <form-row-input
+        [label]="'data.upload'"
+        [icon]="'fa-upload'"
+        [inputType]="'file'"
+        (valueChangeNative)="uploadAppData($event)"
+    ></form-row-input>
+  </div>
+</div>
+

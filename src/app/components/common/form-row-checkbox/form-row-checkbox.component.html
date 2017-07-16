@@ -1,0 +1,12 @@
+<div #formRow class="form-group" style="margin-bottom: 3px">
+  <label>
+    <span  *ngIf="!inputDisabled">
+      <input type="checkbox" [ngModel]="value" (ngModelChange)="onNgModelChange($event)" [ngClass]="{'big': inputBig}"> &nbsp;
+    </span>
+    <span  *ngIf="inputDisabled">
+      <input type="checkbox" disabled [ngModel]="value" [ngClass]="{'big': inputBig}"> &nbsp;
+    </span>
+    {{label | trans}}
+    <info-tooltip *ngIf="tooltipLabel && tooltipLabel.length > 0" [label]="tooltipLabel" [icon]="tooltipIcon"></info-tooltip>
+  </label>
+</div>
