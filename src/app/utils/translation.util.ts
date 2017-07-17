@@ -522,6 +522,10 @@ export class TranslationUtil {
       { token: 'cloud.backup.success', cs: 'Data byla úspěšně odeslána na server', en: 'Backup was successful' },
       { token: 'cloud.backup.failed', cs: 'Při odesílání se vyskytla chyba', en: 'Backup failure' },
       { token: 'data.cloud.restore', cs: 'Získat data ze serveru', en: 'Restore from cloud' },
+      { token: 'pool.total', cs: 'Celkem/vyplaceno z poolu', en: 'Total/paid from pool' },
+      { token: 'pool.total.short', cs: 'Pool - celkem', en: 'Pool total' },
+      { token: 'pool.pending', cs: 'Čeká na poolu', en: 'Pending on pool' },
+      { token: 'pool.pending.short', cs: 'Pool - čeká', en: 'Pool pending' },
 
       { token: 'en', cs: 'English', en: 'English' },
       { token: 'cs', cs: 'Čeština', en: 'Čeština' },

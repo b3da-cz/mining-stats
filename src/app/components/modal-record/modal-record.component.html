@@ -28,6 +28,8 @@
               (valueChange)="changeDirection($event)"
           ></form-row-select>
           <form-row-input [label]="'time'" [icon]="'fa-clock'" [inputType]="'datetime-local'" [(value)]="dateTimeString" (valueChange)="changeTime($event)"></form-row-input>
+          <form-row-input [label]="'pool.total'" [icon]="'fa-chart-pie'" [inputType]="'number'" [(value)]="record.poolTotal" (valueChange)="calcAmountFromPoolData()"></form-row-input>
+          <form-row-input [label]="'pool.pending'" [icon]="'fa-clock'" [inputType]="'number'" [(value)]="record.poolPending" (valueChange)="calcAmountFromPoolData()"></form-row-input>
           <form-row-input [label]="'amount'" [icon]="'fa-glass-martini'" [inputType]="'number'" [(value)]="record.amount"></form-row-input>
           <form-row-input [label]="'rate.btc'" [icon]="'fa-chart-bar'" [inputType]="'number'" [(value)]="record.btcRate" [btnIcon]="'fa-refresh'" (onBtnEvent)="fillBtcRate()"></form-row-input>
           <form-row-input [label]="'amount.btc'" [icon]="'fa-trophy'" [inputType]="'number'" [(value)]="record.btcAmount" [btnIcon]="'fa-refresh'" (onBtnEvent)="fillBtcAmount()"></form-row-input>
@@ -38,6 +40,10 @@
           <div class="col-xs-7 text-right">{{record.direction | txDir | trans}}</div>
           <div class="col-xs-5"><strong>{{'time' | trans}}</strong></div>
           <div class="col-xs-7 text-right">{{record.time | strToDate | date: 'dd.MM.yyyy HH:mm'}}</div>
+          <div class="col-xs-5" *ngIf="record.poolTotal > 0"><strong>{{'pool.total.short' | trans}}</strong></div>
+          <div class="col-xs-7 text-right" *ngIf="record.poolTotal > 0">{{record.poolTotal | formatCoinAmount}} {{coin.symbol.toUpperCase()}}</div>
+          <div class="col-xs-5" *ngIf="record.poolPending > 0"><strong>{{'pool.pending.short' | trans}}</strong></div>
+          <div class="col-xs-7 text-right" *ngIf="record.poolPending > 0">{{record.poolPending | formatCoinAmount}} {{coin.symbol.toUpperCase()}}</div>
           <div class="col-xs-5"><strong>{{'amount' | trans}}</strong></div>
           <div class="col-xs-7 text-right" [ngClass]="{'amount-negative': record.direction === 2}">{{record.amount | formatCoinAmount}} {{coin.symbol.toUpperCase()}}</div>
           <div class="col-xs-5"><strong>{{'rate.btc' | trans}}</strong></div>

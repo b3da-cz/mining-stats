@@ -1,0 +1,9 @@
+.row-heading-container {
+    display: flex;
+    align-items: center;
+
+}
+.row-heading-heading {
+    font-size: 2.7rem;
+    margin-right: 2rem;
+}

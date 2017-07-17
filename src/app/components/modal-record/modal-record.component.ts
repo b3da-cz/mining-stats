@@ -12,6 +12,7 @@ import { TimeUtil } from '../../utils';
 export class ModalRecordComponent implements OnInit {
   @ViewChild('recordModal') public recordModal: ModalDirective;
   @Input() record: Record;
+  @Input() lastRecord: Record; // for pool total/pending calc
   @Input() coin: Coin;
   @Input() isCreatingNew = false;
   @Input() isEditMode = false;
@@ -80,6 +81,17 @@ export class ModalRecordComponent implements OnInit {
     if (this.record && this.record.btcRate) {
       this.record.btcAmount = Number((this.record.btcRate * this.record.amount).toFixed(8));
     }
+  }
+
+  calcAmountFromPoolData(): void {
+    if (!this.record) { return }
+    if (!this.lastRecord) {
+      this.record.amount = Number(this.record.poolTotal) + Number(this.record.poolPending);
+      return;
+    }
+    const lastSum = Number(this.lastRecord.poolTotal) + Number(this.lastRecord.poolPending);
+    const sum = Number(this.record.poolTotal) + Number(this.record.poolPending);
+    this.record.amount = sum - lastSum;
   }
 
   switchEditMode(): void {
