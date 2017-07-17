@@ -1,7 +1,22 @@
 # MiningStats
 
-### quick and dirty app for tracking various cryptocurrencies mining - wip
+#### quick and dirty app for tracking various cryptocurrencies mining - wip
 
+### for remote data backup
+
+* goto [Hyperdev/Gomix/Glitch](https://glitch.com/edit/#!/new-project) and create new project
+
+* add `body-parser` and `node-persist` in `package.json`
+
+* copy [this](./backup-server.js) content into `server.js` on Glitch
+
+* edit `auth.user` and `auth.password` - to be filled in in app settings
+
+* backup server is ready :) note its URL (you can delete the rest of frontend files, or leave them..)
+
+* fill URLs, auth and passphrase for data protection in app. you can save the information to later use (this is only saved on local machine)
+
+---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 

@@ -30,18 +30,6 @@ body { padding-top: 70px; }
 .padding-horizontal { padding-left: 1rem; padding-right: 1rem; }
 .no-padding { padding: 0 !important; }
 
-.splash-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - 10rem);
-}
-.splash {
-    width: 40vh;
-    height: auto;
-    opacity: 0.2;
-}
-
 .overlay {
     position: absolute;
     display: flex;

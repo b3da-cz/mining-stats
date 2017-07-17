@@ -1,26 +1,67 @@
 <h1>{{'settings' | trans}}</h1>
 <div class="row">
   <div class="col-xs-12 col-sm-6">
+    <h3>{{'backup.local' | trans}}</h3>
     <label for="download-anchor">{{'data.saveToFile' | trans}}:</label>
     <br>
     <a href="" id="download-anchor" class="btn btn-default">
       <i class="fal fa-download margin-right"></i>
       {{'data.download' | trans}}
     </a>
-    <!--<btn [label]="'data.download'"-->
-         <!--[icon]="'fa-download'"-->
-         <!--[classes]="['btn-primary', 'margin-right']"-->
-         <!--[btnType]="'submit'"-->
-         <!--(onEvent)="downloadAppData()"-->
-    <!--&gt;</btn>-->
+    <div style="width: 30rem;">
+      <form-row-input
+          [label]="'data.upload'"
+          [icon]="'fa-upload'"
+          [inputType]="'file'"
+          (valueChangeNative)="uploadAppData($event)"
+      ></form-row-input>
+    </div>
   </div>
   <div class="col-xs-12 col-sm-6">
+    <h3>{{'backup.cloud' | trans}}</h3>
     <form-row-input
-        [label]="'data.upload'"
-        [icon]="'fa-upload'"
-        [inputType]="'file'"
-        (valueChangeNative)="uploadAppData($event)"
+        [label]="'url.backup'"
+        [icon]="'fa-link'"
+        [(value)]="urlBackup"
     ></form-row-input>
+    <form-row-input
+        [label]="'url.restore'"
+        [icon]="'fa-link'"
+        [(value)]="urlRestore"
+    ></form-row-input>
+    <form-row-input
+        [label]="'cloud.user'"
+        [icon]="'fa-user'"
+        [(value)]="cloudAuthData.user"
+    ></form-row-input>
+    <form-row-input
+        [label]="'cloud.password'"
+        [icon]="'fa-lock-alt'"
+        [(value)]="cloudAuthData.password"
+    ></form-row-input>
+    <form-row-input
+        [label]="'cipher.passphrase'"
+        [icon]="'fa-shield'"
+        [(value)]="passphase"
+    ></form-row-input>
+    <btn [label]="'settings.save'"
+         [icon]="'fa-save'"
+         [classes]="['btn-default', 'margin-right']"
+         (onEvent)="saveViewSetting()"
+    ></btn>
+    <btn [label]="'data.cloud.backup'"
+         [icon]="'fa-upload'"
+         [classes]="['btn-default', 'margin-right']"
+         (onEvent)="cloudBackup()"
+    ></btn>
+    <btn [label]="'data.cloud.restore'"
+         [icon]="'fa-download'"
+         [classes]="['btn-default']"
+         (onEvent)="cloudRestore()"
+    ></btn>
+    <div *ngIf="resultMsg && resultMsg.length > 0" class="result-message">
+      {{resultMsg | trans}}
+    </div>
   </div>
 </div>
 
